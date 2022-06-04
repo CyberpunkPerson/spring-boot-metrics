@@ -1,0 +1,5887 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "United dashboard for { //todo replace }",
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 1,
+    "id": 7008,
+    "iteration": 1651148377857,
+    "links": [],
+    "panels": [
+      {
+        "collapsed": false,
+        "datasource": "MAGE v2",
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 6,
+        "panels": [],
+        "title": "Common",
+        "type": "row"
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 1
+        },
+        "hiddenSeries": false,
+        "id": 70,
+        "interval": "",
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "hideEmpty": true,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "histogram_quantile($quantile, sum(rate(method_timed_seconds_bucket{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\"$dc.*\", pod_name=~\"$podName\", env=\"$env\"}[1m])) by (operationName, dc, pod_name, le))",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "[{{pod_name}}] {{operationName}}",
+            "pql": true,
+            "refId": "F",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "http_server_requests_seconds{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\"$dc.*\", pod_name=~\"$podName\",  quantile=\"$quantile\"}  ",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "[{{pod_name}}] {{operationName}}  {{uri}} ",
+            "pql": true,
+            "refId": "H",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "method_timed_seconds{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\"$dc.*\", pod_name=~\"$podName\", quantile=\"$quantile\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "[{{pod_name}}] {{operationName}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "histogram_quantile($quantile, sum(rate(http_server_requests_seconds_bucket{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[1m])) by (env, instance, operationName, le))",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "[{{env}} - {{instance}}] {{operationName}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "histogram_quantile($quantile, sum(rate(method_timed_seconds_bucket{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[1m])) by (env, instance, operationName, le))",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "[{{env}} - {{instance}}] {{operationName}}",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "histogram_quantile($quantile, sum(rate(http_server_requests_seconds_bucket{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\"$dc.*\", pod_name=~\"$podName\", env=\"$env\"}[1m])) by (operationName, dc, pod_name, le))",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "[{{pod_name}}] {{operationName}}",
+            "pql": true,
+            "refId": "D",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "method_timed_seconds{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\", quantile=\"$quantile\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "[{{env}} - {{instance}}] {{operationName}}",
+            "pql": true,
+            "refId": "E",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "http_server_requests_seconds{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\", quantile=\"$quantile\"}  ",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "[{{env}} - {{instance}}] {{operationName}}",
+            "pql": true,
+            "refId": "G",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "latency (sec) http/logic",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "transformations": [],
+        "type": "graph",
+        "xaxis": {
+          "buckets": 1,
+          "min": 2,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "decimals": 2,
+            "format": "s",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": false
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 9
+        },
+        "hiddenSeries": false,
+        "id": 26,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "hideEmpty": true,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sort": "max",
+          "sortDesc": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(http_server_requests_seconds_count{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\"$dc.*\", pod_name=~\"$podName\"}[1m])) by (operationName, dc, pod_name)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "[{{pod_name}}] {{operationName}}",
+            "pql": true,
+            "refId": "E",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(method_timed_seconds_count{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\"$dc.*\", pod_name=~\"$podName\"}[1m])) by (operationName, pod_name, dc)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "[{{pod_name}}] {{operationName}}",
+            "pql": true,
+            "refId": "F",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(http_server_requests_seconds_count{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval])) by (env, instance, operationName)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "[{{dc}} - {{instance}}] {{operationName}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(method_timed_seconds_count{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval])) by (env, instance, operationName)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "[{{dc}} - {{instance}}] {{operationName}}",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "RPS",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "decimals": null,
+            "format": "short",
+            "label": "count",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "none",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": false
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {
+          "202": "red"
+        },
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 10,
+          "w": 24,
+          "x": 0,
+          "y": 17
+        },
+        "hiddenSeries": false,
+        "id": 54,
+        "interval": "",
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": false,
+          "hideEmpty": true,
+          "hideZero": true,
+          "max": false,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(http_server_requests_seconds_count{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\"$dc.*\", pod_name=~\"$podName\"}[1m])) by (status) ",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{status}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(method_timed_seconds_count{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\"$dc.*\", pod_name=~\"$podName\"}[1m])) by (status)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{status}}",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(http_server_requests_seconds_count{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[1m])) by (env, status) ",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{status}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(method_timed_seconds_count{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[1m])) by (env, status) ",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{status}}",
+            "pql": true,
+            "refId": "D",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Status per second",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "decimals": null,
+            "format": "none",
+            "label": "count",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "none",
+            "label": "",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": false
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 10,
+          "w": 24,
+          "x": 0,
+          "y": 27
+        },
+        "hiddenSeries": false,
+        "id": 42,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": true,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": false,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(jvm_memory_used_bytes{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}) by (pod_name)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "[{{pod_name}}] used",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(jvm_memory_used_bytes{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}) by (env, instance)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "[{{env}} - {{instance}}] used",
+            "pql": true,
+            "refId": "F",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(jvm_memory_committed_bytes{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}) by (pod_name)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "[{{pod_name}}] commited",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(jvm_memory_committed_bytes{env=~\"$dc-$env\", group=~\"$namespace.*\",  service=~\"$applicationName-metrics\", instance=~\"$podName\"}) by (env, instance)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "[{{env}} - {{instance}}] commited",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "JVM Total Memory",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "decbytes",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 0,
+          "y": 37
+        },
+        "hiddenSeries": false,
+        "id": 93,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "max": true,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(jvm_memory_used_bytes{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\", area=\"heap\"}) by (pod_name)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{pod_name}} used",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(jvm_memory_used_bytes{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\", area=\"heap\"}) by (instance, env)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{env}} - {{instance}}] used",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(jvm_memory_committed_bytes{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\", area=\"heap\"}) by (pod_name)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{pod_name}} committed",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(jvm_memory_committed_bytes{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\", area=\"heap\"}) by (env, instance)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{env}} - {{instance}}] commited",
+            "pql": true,
+            "refId": "D",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "JVM Heap",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "bytes",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 12,
+          "y": 37
+        },
+        "hiddenSeries": false,
+        "id": 94,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "max": true,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(jvm_memory_used_bytes{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\", area=\"nonheap\"}) by (pod_name)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{pod_name}} used",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(jvm_memory_used_bytes{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\", area=\"nonheap\"}) by (instance, env)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{env}} - {{instance}}] used",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(jvm_memory_committed_bytes{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\", area=\"nonheap\"}) by (pod_name)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{pod_name}} committed",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(jvm_memory_committed_bytes{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\", area=\"nonheap\"}) by (instance, env)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{env}} - {{instance}}] commited",
+            "pql": true,
+            "refId": "D",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "JVM Non-Heap",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "bytes",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 0,
+          "y": 46
+        },
+        "hiddenSeries": false,
+        "id": 58,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "hideEmpty": false,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": false,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(jvm_gc_pause_seconds_count{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[1m])) by(pod_name, cause)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "[{{pod_name}}]  {{cause}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "rate(jvm_gc_pause_seconds_count{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[1m])",
+            "format": "time_series",
+            "hide": true,
+            "interval": "",
+            "legendFormat": "[{{pod}}]  {{cause}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "rate(jvm_gc_pause_seconds_count{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[1m])",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "[{{env}} - {{instance}}] {{cause}}",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "GC Collections",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 12,
+          "y": 46
+        },
+        "hiddenSeries": false,
+        "id": 90,
+        "legend": {
+          "alignAsTable": false,
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "rightSide": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "rate(jvm_gc_pause_seconds_sum{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[$interval]) / rate(jvm_gc_pause_seconds_count{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[$interval])",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{pod_name}}] avg {{action}} ({{cause}})",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "rate(jvm_gc_pause_seconds_sum{env=~\"$dc-$env\",group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval]) / rate(jvm_gc_pause_seconds_count{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval])",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "[{{env}} {{instance}}] avg {{action}} ({{cause}})",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "GC Pause Durations",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "s",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": "0",
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {},
+            "mappings": [
+              {
+                "from": "",
+                "id": 1,
+                "operator": "",
+                "text": "N/A",
+                "to": "",
+                "type": 1,
+                "value": "null"
+              }
+            ],
+            "max": 1,
+            "min": 0,
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 24,
+          "x": 0,
+          "y": 55
+        },
+        "id": 56,
+        "options": {
+          "displayMode": "gradient",
+          "orientation": "vertical",
+          "reduceOptions": {
+            "calcs": [
+              "last"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showUnfilled": true
+        },
+        "pluginVersion": "7.2.2",
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum (increase(method_counted_total{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[$__range])) by (operationName)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{operationName}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "expr": "sum (increase(method_counted_total{env=\"$env\", container=\"$applicationName\", operationName=~\"$operationName\"}[$__range])) by (operationName)",
+            "hide": true,
+            "legendFormat": "{{operationName}}",
+            "pql": true,
+            "refId": "B"
+          },
+          {
+            "expr": "sum (increase(method_counted_total{env=\"$env\", service_name=\"$applicationName\", operationName=~\"$operationName\"}[$__range])) by (operationName)",
+            "hide": true,
+            "legendFormat": "{{operationName}}",
+            "pql": true,
+            "refId": "C"
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum (increase(method_counted_total{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$__range])) by (operationName)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{operationName}}",
+            "pql": true,
+            "refId": "D",
+            "size": 100000
+          }
+        ],
+        "timeFrom": null,
+        "timeShift": null,
+        "title": "Background processes ",
+        "type": "bargauge"
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 9,
+          "w": 24,
+          "x": 0,
+          "y": 64
+        },
+        "hiddenSeries": false,
+        "id": 28,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": true,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sort": "max",
+          "sortDesc": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "jvm_threads_states_threads{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{pod_name}}] - {{state}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "jvm_threads_states_threads{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{pod_name}}] - {{state}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "thread count",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "collapsed": false,
+        "datasource": "MAGE v2",
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 73
+        },
+        "id": 2,
+        "panels": [],
+        "repeat": null,
+        "title": "Database",
+        "type": "row"
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 10,
+          "w": 24,
+          "x": 0,
+          "y": 74
+        },
+        "hiddenSeries": false,
+        "id": 71,
+        "interval": "20s",
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "hideEmpty": false,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sort": "max",
+          "sortDesc": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "histogram_quantile($quantile, sum(rate(db_timed_seconds_bucket{db=\"$db\", env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[1m])) by (pod_name, path, le))",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} {{path}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "db_timed_seconds{db=\"$db\", env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} {{path}}",
+            "pql": true,
+            "refId": "E",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "histogram_quantile($quantile, sum(rate(cassandra_timed_seconds_bucket{env=\"$env\", group=~\"$namespace.*\",  container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[$interval])) by (pod_name, path, le))",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "C* {{pod_name}} {{path}}",
+            "pql": true,
+            "refId": "F",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "cassandra_timed_seconds{env=\"$env\", container_name=\"$applicationName\", pod_name=~\"$podName\", quantile=\"$quantile\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "C* {{pod_name}} {{path}}",
+            "pql": true,
+            "refId": "G",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "histogram_quantile($quantile, sum(rate(db_timed_seconds_bucket{db=\"$db\",env=~\"$dc-$env\", group=~\"$namespace.*\",  service=~\"$applicationName-metrics\", instance=~\"$podName\"}[1m])) by (pod_name, path, le))",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} {{path}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "db_timed_seconds{db=\"$db\",env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} {{path}}",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "histogram_quantile($quantile, sum(rate(cassandra_timed_seconds_bucket{env=~\"$dc-$env\", group=~\"$namespace.*\",  service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval])) by (pod_name, method, le))",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "C* {{pod_name}} {{method}}",
+            "pql": true,
+            "refId": "D",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "cassandra_timed_seconds{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "C* {{pod_name}} {{path}}",
+            "pql": true,
+            "refId": "H",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "histogram_quantile($quantile, sum(rate(cassandra_timed_seconds_bucket{env=~\"$dc-$env\", group=~\"$namespace.*\",  service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval])) by (pod_name, path, le))",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "C* {{pod_name}} {{path}}",
+            "pql": true,
+            "refId": "I",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "latency (sec)",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "s",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 7,
+          "w": 24,
+          "x": 0,
+          "y": 84
+        },
+        "hiddenSeries": false,
+        "id": 18,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": true,
+          "hideEmpty": false,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sort": "max",
+          "sortDesc": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(db_timed_seconds_count{db=\"$db\", env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[$interval])) by (path, pod_name)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} - {{path}} ",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(cassandra_timed_seconds_count{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[$interval])) by (pod_name, path)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "C* {{pod_name}}  - {{path}} ",
+            "pql": true,
+            "refId": "D",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(db_timed_seconds_count{db=\"$db\", env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval])) by (path, pod_name)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} - {{path}} ",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(cassandra_timed_seconds_count{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval])) by (pod_name, method)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "C* {{pod_name}}  - {{method}} ",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "RPS",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 7,
+          "w": 24,
+          "x": 0,
+          "y": 91
+        },
+        "hiddenSeries": false,
+        "id": 20,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "hideEmpty": false,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sort": "current",
+          "sortDesc": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "jdbc_connections_active{name=\"$db\", env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "({{name}}) {{pod_name}} - active",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "jdbc_connections_max{name=\"$db\", env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "({{name}}) {{pod_name}} - max",
+            "pql": true,
+            "refId": "D",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "hikaricp_connections_max{env=\"$env\", group=~\"$namespace.*\",  container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "({{name}}) {{pod_name}} - max",
+            "pql": true,
+            "refId": "G",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "hikaricp_connections_active{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "({{name}}) {{pod_name}} - active",
+            "pql": true,
+            "refId": "H",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "jdbc_connections_active{name=\"$db\",env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "({{name}}) {{pod_name}} - active",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "jdbc_connections_max{name=\"$db\",env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "({{name}}) {{pod_name}} - max",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "hikaricp_connections_max{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "({{name}}) {{pod_name}} - max",
+            "pql": true,
+            "refId": "E",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "hikaricp_connections_active{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "({{name}}) {{pod_name}} - active",
+            "pql": true,
+            "refId": "F",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "jdbc connection",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 98
+        },
+        "hiddenSeries": false,
+        "id": 114,
+        "interval": "",
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(hikaricp_connections_acquire_seconds_sum{env=~\"$env|$dc-$env\", group=~\"$namespace.*\",  service=~\"$applicationName-metrics\", instance=~\"$podName\"} [$interval])) by (pool, pod_name)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": " acquire {{pod_name}} {{pool}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(hikaricp_connections_usage_seconds_sum{env=~\"$env|$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"} [$interval])) by (pool, pod_name)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": " usage {{pod_name}} {{pool}}",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(hikaricp_connections_creation_seconds_sum{env=~\"$env|$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"} [$interval])) by (pool, pod_name)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": " creation {{pod_name}} {{pool}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Hikari cp",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "s",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 7,
+          "w": 24,
+          "x": 0,
+          "y": 106
+        },
+        "hiddenSeries": false,
+        "id": 74,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "hideEmpty": false,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sort": "max",
+          "sortDesc": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(hikaricp_connections_acquire_seconds_sum{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"} [$interval])) by (pool, pod_name) /\nsum(rate(hikaricp_connections_usage_seconds_sum{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"} [$interval])) by (pool, pod_name)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "{{pod_name}} - {{pool}} acquire/usage",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(hikaricp_connections_acquire_seconds_sum{env=~\"$env|$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"} [$interval])) by (pool, pod_name) /\nsum(rate(hikaricp_connections_usage_seconds_sum{env=~\"$env|$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"} [$interval])) by (pool, pod_name)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "{{pod_name}} - {{pool}} acquire/usage",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "hicaricp connection accuire/usage rate",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "none",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "collapsed": false,
+        "datasource": "MAGE v2",
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 113
+        },
+        "id": 30,
+        "panels": [],
+        "repeat": null,
+        "title": "Services",
+        "type": "row"
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 114
+        },
+        "hiddenSeries": false,
+        "id": 32,
+        "interval": "20s",
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "histogram_quantile($quantile, sum(rate(rest_timed_seconds_bucket{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\", status=\"success\"}[$interval])) by (path, le, pod_name))",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{pod_name}} [{{$applicationName}}] {{path}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "rest_timed_seconds{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\", status=\"success\", quantile=\"$quantile\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{pod_name}} {{path}}",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "histogram_quantile($quantile, sum(rate(rest_timed_seconds_bucket{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\", status=\"success\"}[$interval])) by (path, le, pod_name))",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{pod_name}} [{{$applicationName}}] {{path}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "rest_timed_seconds{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\", status=\"success\", quantile=\"$quantile\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 1,
+            "legendFormat": "{{pod_name}} [{{$applicationName}}] {{path}}",
+            "pql": true,
+            "refId": "D",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "histogram_quantile($quantile, sum(rate(rest_timed_seconds_bucket{env=~\"$env\", group=~\"$namespace.*\", container_name=~\"$applicationName\", instance=~\"$podName\",}[$interval])) by (path, le, pod_name, status))",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{pod_name}} [{{$applicationName}}] {{path}} {{status}}",
+            "pql": true,
+            "refId": "E",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "histogram_quantile($quantile, sum(rate(rest_timed_seconds_bucket{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval])) by (method, le, pod_name))",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{pod_name}} [{{$applicationName}}] {{method}}",
+            "pql": true,
+            "refId": "F",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "latency (sec) rest",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "s",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 122
+        },
+        "hiddenSeries": false,
+        "id": 34,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": true,
+          "hideEmpty": true,
+          "hideZero": true,
+          "max": false,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(rest_timed_seconds_count{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[$interval])) by (path, status, pod_name)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} [{{status}}] {{path}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(rest_timed_seconds_count{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval])) by (path, status, pod_name)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} [{{status}}] {{path}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(rest_timed_seconds_count{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval])) by (method, pod_name)",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} [{{status}}] {{method}}",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "rest rps",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 7,
+          "w": 24,
+          "x": 0,
+          "y": 130
+        },
+        "hiddenSeries": false,
+        "id": 50,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "hideEmpty": true,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sort": "max",
+          "sortDesc": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "histogram_quantile($quantile, sum(rate(provider_timed_seconds_bucket{provider=\"s3\",env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[$interval])) by (pod_name, path, le))",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{pod_name}}] {{path}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "s3 latency (sec)",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 137
+        },
+        "hiddenSeries": false,
+        "id": 52,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "hideEmpty": true,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sideWidth": null,
+          "sort": null,
+          "sortDesc": null,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(provider_timed_seconds_count{ provider=\"s3\", env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[$interval])) by (path, pod_name, status)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{pod_name}} {{path}} [{{status}}]",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "s3 rps",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 145
+        },
+        "hiddenSeries": false,
+        "id": 75,
+        "interval": "20s",
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "histogram_quantile($quantile, sum(rate(grpc_client_timed_seconds_bucket{status=\"success\",env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[$interval])) by (path, le, pod_name))",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{pod_name}} {{path}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "grpc_client_timed_seconds_bucket{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\", quantile=\"$quantile\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "legendFormat": "{{pod_name}} {{path}}",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "grpc latency q=$quantile",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "s",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 153
+        },
+        "hiddenSeries": false,
+        "id": 76,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": true,
+          "hideEmpty": true,
+          "hideZero": true,
+          "max": false,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(grpc_client_timed_seconds_count{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[$interval])) by (path, status, pod_name)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} [{{status}}] {{path}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "grpc rps",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "collapsed": false,
+        "datasource": "MAGE v2",
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 161
+        },
+        "id": 44,
+        "panels": [],
+        "repeat": null,
+        "title": "Kafka",
+        "type": "row"
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 162
+        },
+        "hiddenSeries": false,
+        "id": 40,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": true,
+          "hideEmpty": true,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(sender_timed_seconds_bucket{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[1m])) by (pod_name, path, status)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "[{{pod_name}}] {{status}} - {{path}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sender_timed_seconds{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\", quantile=\"$quantile\"}",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{pod_name}}] {{status}} - {{path}}",
+            "pql": true,
+            "refId": "D",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "kafka rps",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 162
+        },
+        "hiddenSeries": false,
+        "id": 48,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": false,
+          "hideEmpty": true,
+          "hideZero": true,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(kafka_consumer_records_lag_records{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}) by (topic, pod_name)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{pod_name}}] {{topic}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "lag records",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 170
+        },
+        "hiddenSeries": false,
+        "id": 78,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(kafka_consumer_group_lag{group=\"strp\", env=\"prod\", service=\"consumer-lag\", exported_group!=\"kafka.g.lebedev.group\", exported_group!=\"console-consumer-8517\", exported_group!=\"test_kafka_connection\", exported_group=~\"$applicationName.+|.+$applicationName.+|$applicationName\"}) by (topic, exported_group)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Topic lag [Broker]",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "description": "The average number of records in each request",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 170
+        },
+        "hiddenSeries": false,
+        "id": 84,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(kafka_consumer_time_between_poll_max{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}) by (pod_name, client_id)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{pod_name}}  - {{client_id}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Time between poll",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "description": "The average number of records in each request",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 178
+        },
+        "hiddenSeries": false,
+        "id": 86,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(kafka_consumer_fetch_manager_records_per_request_avg{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}) by (pod_name, topic, client_id)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{pod_name}} - {{topic}} - {{client_id}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Record per request",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "description": "The average fraction of time the consumer's poll() is idle as opposed to waiting for the user code to process records.",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 178
+        },
+        "hiddenSeries": false,
+        "id": 80,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(kafka_consumer_poll_idle_ratio_avg{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}) by (pod_name, topic, client_id)\n",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{pod_name}} - {{client_id}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Time the consumer's poll() is idle as opposed",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 186
+        },
+        "hiddenSeries": false,
+        "id": 82,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(kafka_consumer_fetch_manager_fetch_size_max{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}) by (pod_name, client_id)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{pod_name}} - {{client_id}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "The maximum number of bytes fetched per request",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 186
+        },
+        "hiddenSeries": false,
+        "id": 88,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "max": false,
+          "min": true,
+          "rightSide": true,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(spring_kafka_listener_seconds_count{env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval])) by (instance, result)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{instance}}] {{status}} - {{result}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Consumer rps",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 194
+        },
+        "hiddenSeries": false,
+        "id": 64,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "kafka_producer_records_per_request_avg{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{instance}}] {{topic}} {{client_id}}",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Records per request",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 24,
+          "x": 0,
+          "y": 202
+        },
+        "hiddenSeries": false,
+        "id": 66,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "kafka_producer_batch_size_avg{senv=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{instance}}] {{topic}} {{client_id}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Average batch size",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 7,
+          "w": 24,
+          "x": 0,
+          "y": 210
+        },
+        "hiddenSeries": false,
+        "id": 60,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(kafka_producer_request_latency_avg{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}) by (kafka_name, pod_name, topic, client_id)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{pod_name}}] {{kafka_name}} {{topic}}@{{client_id}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "producer request latency avg",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 7,
+          "w": 24,
+          "x": 0,
+          "y": 217
+        },
+        "hiddenSeries": false,
+        "id": 62,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(kafka_producer_record_send_rate{env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}) by (pod_name, topic, client_id)",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{pod_name}}] {{topic}}@{{client_id}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "producer rps",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "collapsed": false,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 224
+        },
+        "id": 104,
+        "panels": [],
+        "title": "Casandra",
+        "type": "row"
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 225
+        },
+        "hiddenSeries": false,
+        "id": 106,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "cassandra_datastax_open_connections{env=\"$env\", container_name=\"$applicationName\", pod_name=~\"$podName\"}",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{pod_name}}] - open",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "cassandra_datastax_trashed_connections{env=\"$env\", container_name=\"$applicationName\", pod_name=~\"$podName\"}",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{pod_name}}] - trashed",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "cassandra_datastax_open_connections{env=~\"$dc-$env\", instance=~\"$podName\", service=~\"$applicationName.*\"}",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{instance}}] - open",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "cassandra_datastax_trashed_connections{env=~\"$dc-$env\", instance=~\"$podName\", service=~\"$applicationName.*\"}",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{instance}}] - trashed",
+            "pql": true,
+            "refId": "D",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Connections",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 225
+        },
+        "hiddenSeries": false,
+        "id": 108,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "rate(cassandra_datastax_bytes_received_total{env=\"$env\", container_name=\"$applicationName\", pod_name=~\"$podName\"}[$interval])",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{pod_name}}] - received",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "rate(cassandra_datastax_bytes_sent_total{env=\"$env\", container_name=\"$applicationName\", pod_name=~\"$podName\"}[$interval])",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{pod_name}}] - sent",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "rate(cassandra_datastax_bytes_received_total{env=~\"$dc-$env\", instance=~\"$podName\", service=~\"$applicationName.*\"}[$interval])",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{instance}}] - received",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "rate(cassandra_datastax_bytes_sent_total{env=~\"$dc-$env\", instance=~\"$podName\", service=~\"$applicationName.*\"}[$interval])",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "[{{instance}}] - sent",
+            "pql": true,
+            "refId": "D",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Bytes transferring",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 10,
+          "w": 12,
+          "x": 0,
+          "y": 233
+        },
+        "hiddenSeries": false,
+        "id": 110,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "max": true,
+          "min": false,
+          "rightSide": false,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "rate(cassandra_datastax_requests_count{env=\"$env\", container_name=\"$applicationName\", pod_name=~\"$podName\"}[$interval])",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{pod_name}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "rate(cassandra_datastax_requests_count{env=~\"$dc-$env\", instance=~\"$podName\", service=~\"$applicationName.*\"}[$interval])",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{instance}}",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "rps",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 10,
+          "w": 12,
+          "x": 12,
+          "y": 233
+        },
+        "hiddenSeries": false,
+        "id": 112,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "hideZero": false,
+          "max": true,
+          "min": false,
+          "rightSide": false,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "rate(cassandra_datastax_requests{env=\"$env\", container_name=\"$applicationName\", pod_name=~\"$podName\", quantile=\"$quantile\"}[$interval])",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{pod_name}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "rate(cassandra_datastax_requests{env=~\"$dc-$env\", instance=~\"$podName\", service=~\"$applicationName.*\", quantile=\"$quantile\"}[$interval])",
+            "format": "time_series",
+            "interval": "",
+            "legendFormat": "{{instance}}",
+            "pql": true,
+            "refId": "B",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "latency ($quantile)",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "s",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "collapsed": false,
+        "datasource": "MAGE v2",
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 243
+        },
+        "id": 4,
+        "panels": [],
+        "repeat": null,
+        "title": "Cache",
+        "type": "row"
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 244
+        },
+        "hiddenSeries": false,
+        "id": 8,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": true,
+          "hideEmpty": true,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sort": "max",
+          "sortDesc": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(cache_gets_total{result=\"hit\", env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[$interval])) by (name, pod_name)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} {{name}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(cache_gets_total{result=\"hit\", env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval])) by (name, pod_name)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} {{name}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "hit",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 244
+        },
+        "hiddenSeries": false,
+        "id": 10,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": true,
+          "hideEmpty": true,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sort": "max",
+          "sortDesc": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(cache_gets_total{result=\"miss\", env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[$interval])) by (name, pod_name)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} {{name}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "sum(rate(cache_gets_total{result=\"miss\", env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval])) by (name, pod_name)",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} {{name}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "miss",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 252
+        },
+        "hiddenSeries": false,
+        "id": 12,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "hideEmpty": true,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sort": "max",
+          "sortDesc": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": " (sum(rate(cache_gets_total{result=\"miss\", env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[$interval])) by (name, pod_name)) /\n (sum(rate(cache_gets_total{result=\"hit\", env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}[$interval])) by (name, pod_name)) ",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} {{name}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": " (sum(rate(cache_gets_total{result=\"miss\", env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval])) by (name, pod_name)) /\n (sum(rate(cache_gets_total{result=\"hit\",env=~\"$dc-$env\", group=~\"$namespace.*\", service=~\"$applicationName-metrics\", instance=~\"$podName\"}[$interval])) by (name, pod_name)) ",
+            "format": "time_series",
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "{{pod_name}} {{name}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "miss / hits",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "MAGE v2",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "links": []
+          },
+          "overrides": []
+        },
+        "fill": 1,
+        "fillGradient": 0,
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 252
+        },
+        "hiddenSeries": false,
+        "id": 14,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": true,
+          "hideEmpty": true,
+          "hideZero": true,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sort": "max",
+          "sortDesc": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null as zero",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "7.2.2",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "chart": "prefix",
+            "expr": "cache_size{container_name=\"$applicationName\", env=\"$env\", group=~\"$namespace.*\", container_name=\"$applicationName\", pod_name=~\".*$dc.*\", pod_name=~\"$podName\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "({{name}}) {{pod_name}}",
+            "pql": true,
+            "refId": "C",
+            "size": 100000
+          },
+          {
+            "chart": "prefix",
+            "expr": "cache_size{env=~\"$dc-$env\", group=~\"$namespace.*\",  service=~\"$applicationName-metrics\", instance=~\"$podName\"}",
+            "format": "time_series",
+            "hide": false,
+            "interval": "",
+            "intervalFactor": 4,
+            "legendFormat": "({{name}}) {{instance}}",
+            "pql": true,
+            "refId": "A",
+            "size": 100000
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "cache size",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "collapsed": true,
+        "datasource": null,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 260
+        },
+        "id": 96,
+        "panels": [
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "MAGE v2",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {}
+              },
+              "overrides": []
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 16,
+              "w": 12,
+              "x": 0,
+              "y": 6
+            },
+            "hiddenSeries": false,
+            "id": 98,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": false,
+              "max": true,
+              "min": false,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null as zero",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.2.2",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "chart": "prefix",
+                "expr": "rate(zipkin_reporter_spans_total{env=\"$env\", container_name=\"$applicationName\", pod_name=~\"$podName\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{pod_name}}] - total",
+                "pql": true,
+                "refId": "A",
+                "size": 100000
+              },
+              {
+                "chart": "prefix",
+                "expr": "rate(zipkin_reporter_spans_dropped_total{env=\"$env\", container_name=\"$applicationName\", pod_name=~\"$podName\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{pod_name}}] - dropped",
+                "pql": true,
+                "refId": "B",
+                "size": 100000
+              },
+              {
+                "chart": "prefix",
+                "expr": "avg_over_time(zipkin_reporter_queue_spans{env=\"$env\", container_name=\"$applicationName\", pod_name=~\"$podName\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{pod_name}}] - queue",
+                "pql": true,
+                "refId": "C",
+                "size": 100000
+              },
+              {
+                "chart": "prefix",
+                "expr": "rate(zipkin_reporter_spans_total{env=~\"$dc-$env\", instance=~\"$podName\", service=~\"$applicationName.*\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{instance}}] - total",
+                "pql": true,
+                "refId": "D",
+                "size": 100000
+              },
+              {
+                "chart": "prefix",
+                "expr": "rate(zipkin_reporter_spans_dropped_total{env=~\"$dc-$env\", instance=~\"$podName\", service=~\"$applicationName.*\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{instance}}] - dropped",
+                "pql": true,
+                "refId": "E",
+                "size": 100000
+              },
+              {
+                "chart": "prefix",
+                "expr": "rate(zipkin_reporter_queue_spans{env=~\"$dc-$env\", instance=~\"$podName\", service=~\"$applicationName.*\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{instance}}] - queue",
+                "pql": true,
+                "refId": "F",
+                "size": 100000
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Span rate",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "MAGE v2",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {}
+              },
+              "overrides": []
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 12,
+              "y": 6
+            },
+            "hiddenSeries": false,
+            "id": 100,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": false,
+              "max": true,
+              "min": false,
+              "rightSide": true,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null as zero",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.2.2",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "chart": "prefix",
+                "expr": "rate(zipkin_reporter_messages_total{env=\"$env\", container_name=\"$applicationName\", pod_name=~\"$podName\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{pod_name}}] - total",
+                "pql": true,
+                "refId": "A",
+                "size": 100000
+              },
+              {
+                "chart": "prefix",
+                "expr": "rate(zipkin_reporter_messages_dropped_total{env=\"$env\", container_name=\"$applicationName\", pod_name=~\"$podName\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{pod_name}}] - dropped",
+                "pql": true,
+                "refId": "B",
+                "size": 100000
+              },
+              {
+                "chart": "prefix",
+                "expr": "rate(zipkin_reporter_messages_total{env=~\"$dc-$env\", instance=~\"$podName\", service=~\"$applicationName.*\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{instance}}] - total",
+                "pql": true,
+                "refId": "C",
+                "size": 100000
+              },
+              {
+                "chart": "prefix",
+                "expr": "rate(zipkin_reporter_messages_dropped_total{env=~\"$dc-$env\", instance=~\"$podName\", service=~\"$applicationName.*\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{instance}}] - dropped",
+                "pql": true,
+                "refId": "D",
+                "size": 100000
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Message rate",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          },
+          {
+            "aliasColors": {},
+            "bars": false,
+            "dashLength": 10,
+            "dashes": false,
+            "datasource": "MAGE v2",
+            "fieldConfig": {
+              "defaults": {
+                "custom": {}
+              },
+              "overrides": []
+            },
+            "fill": 1,
+            "fillGradient": 0,
+            "gridPos": {
+              "h": 8,
+              "w": 12,
+              "x": 12,
+              "y": 14
+            },
+            "hiddenSeries": false,
+            "id": 102,
+            "legend": {
+              "alignAsTable": true,
+              "avg": true,
+              "current": false,
+              "max": true,
+              "min": false,
+              "rightSide": true,
+              "show": true,
+              "total": false,
+              "values": true
+            },
+            "lines": true,
+            "linewidth": 1,
+            "nullPointMode": "null as zero",
+            "options": {
+              "alertThreshold": true
+            },
+            "percentage": false,
+            "pluginVersion": "7.2.2",
+            "pointradius": 2,
+            "points": false,
+            "renderer": "flot",
+            "seriesOverrides": [],
+            "spaceLength": 10,
+            "stack": false,
+            "steppedLine": false,
+            "targets": [
+              {
+                "chart": "prefix",
+                "expr": "rate(zipkin_reporter_messages_bytes_total{env=~\"$dc-$env\", instance=~\"$podName\", service=~\"$applicationName.*\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{instance}}] - message",
+                "pql": true,
+                "refId": "A",
+                "size": 100000
+              },
+              {
+                "chart": "prefix",
+                "expr": "rate(zipkin_reporter_spans_bytes_total{env=~\"$dc-$env\", instance=~\"$podName\", service=~\"$applicationName.*\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{instance}}] - span",
+                "pql": true,
+                "refId": "B",
+                "size": 100000
+              },
+              {
+                "chart": "prefix",
+                "expr": "avg_over_time(zipkin_reporter_queue_bytes{env=~\"$dc-$env\", instance=~\"$podName\", service=~\"$applicationName.*\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{instance}}] - queue",
+                "pql": true,
+                "refId": "C",
+                "size": 100000
+              },
+              {
+                "chart": "prefix",
+                "expr": "rate(zipkin_reporter_messages_bytes_total{env=\"$env\", container_name=\"$applicationName\", pod_name=~\"$podName\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{pod_name}}] - message",
+                "pql": true,
+                "refId": "D",
+                "size": 100000
+              },
+              {
+                "chart": "prefix",
+                "expr": "rate(zipkin_reporter_spans_bytes_total{env=\"$env\", container_name=\"$applicationName\", pod_name=~\"$podName\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{pod_name}}] - span",
+                "pql": true,
+                "refId": "E",
+                "size": 100000
+              },
+              {
+                "chart": "prefix",
+                "expr": "avg_over_time(zipkin_reporter_queue_bytes{env=\"$env\", container_name=\"$applicationName\", pod_name=~\"$podName\"}[$interval])",
+                "format": "time_series",
+                "interval": "",
+                "legendFormat": "[{{pod_name}}] - queue",
+                "pql": true,
+                "refId": "F",
+                "size": 100000
+              }
+            ],
+            "thresholds": [],
+            "timeFrom": null,
+            "timeRegions": [],
+            "timeShift": null,
+            "title": "Send bytes rate",
+            "tooltip": {
+              "shared": true,
+              "sort": 0,
+              "value_type": "individual"
+            },
+            "type": "graph",
+            "xaxis": {
+              "buckets": null,
+              "mode": "time",
+              "name": null,
+              "show": true,
+              "values": []
+            },
+            "yaxes": [
+              {
+                "format": "Bps",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              },
+              {
+                "format": "short",
+                "label": null,
+                "logBase": 1,
+                "max": null,
+                "min": null,
+                "show": true
+              }
+            ],
+            "yaxis": {
+              "align": false,
+              "alignLevel": null
+            }
+          }
+        ],
+        "title": "Zipkin",
+        "type": "row"
+      }
+    ],
+    "refresh": false,
+    "schemaVersion": 26,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "allValue": null,
+          "current": {
+            "selected": false,
+            "text": "prod",
+            "value": "prod"
+          },
+          "hide": 0,
+          "includeAll": false,
+          "label": null,
+          "multi": false,
+          "name": "env",
+          "options": [
+            {
+              "selected": false,
+              "text": "dev2",
+              "value": "dev2"
+            },
+            {
+              "selected": true,
+              "text": "prod",
+              "value": "prod"
+            },
+            {
+              "selected": false,
+              "text": "prod2",
+              "value": "prod2"
+            }
+          ],
+          "query": "dev2,prod, prod2",
+          "queryValue": "",
+          "skipUrlSync": false,
+          "type": "custom"
+        },
+        {
+          "allValue": null,
+          "current": {
+            "selected": false,
+            "text": "{ //todo replace }",
+            "value": "{ //todo replace }"
+          },
+          "datasource": "MAGE v2",
+          "definition": "pql label_values(kube_deployment_labels{namespace=~\"{ //todo replace }.*\",env=~\"$env|$dc-$env\",group=\"k8s\"},namespace)",
+          "hide": 0,
+          "includeAll": false,
+          "label": null,
+          "multi": false,
+          "name": "namespace",
+          "options": [],
+          "query": "pql label_values(kube_deployment_labels{namespace=~\"{ //todo replace }.*\",env=~\"$env|$dc-$env\",group=\"k8s\"},namespace)",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allValue": null,
+          "current": {
+            "selected": false,
+            "text": "stp-social-core",
+            "value": "stp-social-core"
+          },
+          "datasource": "MAGE v2",
+          "definition": "pql label_values(kube_pod_labels{env=~\"$env|$dc-$env\",namespace=~\"$namespace.*\",group=\"k8s\"},label_app)",
+          "hide": 0,
+          "includeAll": false,
+          "label": "service",
+          "multi": false,
+          "name": "applicationName",
+          "options": [],
+          "query": "pql label_values(kube_pod_labels{env=~\"$env|$dc-$env\",namespace=~\"$namespace.*\",group=\"k8s\"},label_app)",
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allValue": ".*",
+          "current": {
+            "selected": false,
+            "text": [
+              "ds"
+            ],
+            "value": [
+              "ds"
+            ]
+          },
+          "hide": 0,
+          "includeAll": true,
+          "label": null,
+          "multi": true,
+          "name": "dc",
+          "options": [
+            {
+              "selected": false,
+              "text": "All",
+              "value": "$__all"
+            },
+            {
+              "selected": true,
+              "text": "ds",
+              "value": "ds"
+            },
+            {
+              "selected": false,
+              "text": "m1",
+              "value": "m1"
+            }
+          ],
+          "query": "ds,m1",
+          "queryValue": "",
+          "skipUrlSync": false,
+          "type": "custom"
+        },
+        {
+          "allValue": ".*",
+          "current": {
+            "selected": false,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "datasource": "MAGE v2",
+          "definition": "pql label_values(kube_pod_info{k8scluster=~\"$env|$dc-$env\",namespace=\"$namespace\",pod_name=~\"$dc-$applicationName.*|$applicationName.*\"},pod_name) ",
+          "hide": 0,
+          "includeAll": true,
+          "label": null,
+          "multi": true,
+          "name": "podName",
+          "options": [],
+          "query": "pql label_values(kube_pod_info{k8scluster=~\"$env|$dc-$env\",namespace=\"$namespace\",pod_name=~\"$dc-$applicationName.*|$applicationName.*\"},pod_name) ",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allValue": null,
+          "current": {
+            "selected": false,
+            "text": "ca",
+            "value": "ca"
+          },
+          "datasource": "MAGE v2",
+          "definition": "pql label_values(jdbc_connections_min{env=~\"$env|$dc-$env\",group=\"$namespace\",container_name=~\"$applicationName|\", service =~ \"$applicationName-metrics|\"}, name)",
+          "hide": 0,
+          "includeAll": false,
+          "label": null,
+          "multi": false,
+          "name": "db",
+          "options": [],
+          "query": "pql label_values(jdbc_connections_min{env=~\"$env|$dc-$env\",group=\"$namespace\",container_name=~\"$applicationName|\", service =~ \"$applicationName-metrics|\"}, name)",
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allValue": null,
+          "current": {
+            "selected": false,
+            "text": "30s",
+            "value": "30s"
+          },
+          "hide": 0,
+          "includeAll": false,
+          "label": null,
+          "multi": false,
+          "name": "interval",
+          "options": [
+            {
+              "selected": false,
+              "text": "20s",
+              "value": "20s"
+            },
+            {
+              "selected": true,
+              "text": "30s",
+              "value": "30s"
+            },
+            {
+              "selected": false,
+              "text": "1m",
+              "value": "1m"
+            },
+            {
+              "selected": false,
+              "text": "5m",
+              "value": "5m"
+            },
+            {
+              "selected": false,
+              "text": "10m",
+              "value": "10m"
+            },
+            {
+              "selected": false,
+              "text": "30m",
+              "value": "30m"
+            },
+            {
+              "selected": false,
+              "text": "1h",
+              "value": "1h"
+            }
+          ],
+          "query": "20s,30s,1m,5m,10m,30m,1h",
+          "queryValue": "",
+          "skipUrlSync": false,
+          "type": "custom"
+        },
+        {
+          "allValue": null,
+          "current": {
+            "selected": false,
+            "text": "0.999",
+            "value": "0.999"
+          },
+          "hide": 0,
+          "includeAll": false,
+          "label": null,
+          "multi": false,
+          "name": "quantile",
+          "options": [
+            {
+              "selected": false,
+              "text": "0.5",
+              "value": "0.5"
+            },
+            {
+              "selected": false,
+              "text": "0.7",
+              "value": "0.7"
+            },
+            {
+              "selected": false,
+              "text": "0.9",
+              "value": "0.9"
+            },
+            {
+              "selected": false,
+              "text": "0.95",
+              "value": "0.95"
+            },
+            {
+              "selected": false,
+              "text": "0.99",
+              "value": "0.99"
+            },
+            {
+              "selected": true,
+              "text": "0.999",
+              "value": "0.999"
+            }
+          ],
+          "query": "0.5,0.7,0.9,0.95,0.99,0.999",
+          "queryValue": "",
+          "skipUrlSync": false,
+          "type": "custom"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-30m",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "{ //todo replace }",
+    "uid": "CLesNThnk",
+    "version": 149
+  }
